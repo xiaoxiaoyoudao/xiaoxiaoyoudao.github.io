@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海豹中转</title>
+    <style>
+        /* 仅保证链接为纯蓝色，无其他UI */
+        a {
+            color: blue;
+            text-decoration: underline;
+            display: block;    /* 每个链接独占一行 */
+            margin: 4px 0;     /* 极小间距，非UI修饰 */
+        }
+    </style>
+</head>
+<body>
+    <div id="link-container"></div>
+
+    <script>
+        // 读取配置文件，生成链接
+        fetch('config.json')
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return response.json();
+            })
+            .then(config => {
+                const container = document.getElementById('link-container');
+                container.innerHTML = ''; // 清空容器
+
+                config.links.forEach(link => {
+                    const anchor = document.createElement('a');
+                    anchor.href = link.url;
+                    anchor.textContent = link.text;
+                    anchor.target = '_blank';   // 新标签页打开（可根据需要删除）
+                    container.appendChild(anchor);
+                });
+            })
+            .catch(error => {
+                // 加载失败时显示简洁错误（仍无UI）
+                document.getElementById('link-container').innerHTML = 
+                    '<span style="color:red;">配置加载失败，请检查 config.json 文件</span>';
+                console.error('加载配置出错:', error);
+            });
+    </script>
+</body>
+</html>
