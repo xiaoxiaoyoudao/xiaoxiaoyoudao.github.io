@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>海豹中转</title>
     <style>
-        /* 仅保证链接为纯蓝色，无其他UI */
         a {
             color: blue;
             text-decoration: underline;
-            display: block;    /* 每个链接独占一行 */
-            margin: 4px 0;     /* 极小间距，非UI修饰 */
+            display: block;
+            margin: 4px 0;
         }
     </style>
 </head>
@@ -19,7 +18,8 @@
 
     <script>
         // 读取配置文件，生成链接
-        fetch('config.json')
+        const configUrl = `config.json?t=${Date.now()}`;   // 添加时间戳参数
+        fetch(configUrl, { cache: 'no-cache' })            // 同时使用 no-cache 选项
             .then(response => {
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 return response.json();
