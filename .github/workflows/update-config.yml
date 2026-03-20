@@ -11,7 +11,7 @@ jobs:
       - name: Update config.json via API
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GH_TOKEN }}
+          github-token: ${{ secrets.a233 }}
           script: |
             const port = context.payload.client_payload.port;
             if (!port) throw new Error('No port provided');
